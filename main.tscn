@@ -1,0 +1,248 @@
+[gd_scene load_steps=11 format=3 uid="uid://bg20ockvlnb7b"]
+
+[ext_resource type="Script" path="res://Button_send.gd" id="1_2s0x4"]
+[ext_resource type="Texture2D" uid="uid://cxf0qrwweki78" path="res://icon.svg" id="2_f0nae"]
+[ext_resource type="Script" path="res://Node_pulse.gd" id="3_jrtii"]
+[ext_resource type="Script" path="res://Button_abort.gd" id="3_q2cre"]
+[ext_resource type="Script" path="res://Button_saveimage.gd" id="4_a1653"]
+[ext_resource type="Script" path="res://Button_savedata.gd" id="5_2fwni"]
+[ext_resource type="Script" path="res://LineEdit_status.gd" id="5_irsap"]
+[ext_resource type="Script" path="res://Node_pulse_config.gd" id="6_gxo1d"]
+[ext_resource type="Script" path="res://Node_pulse_models.gd" id="7_i5ldt"]
+[ext_resource type="Script" path="res://FileDialog_save.gd" id="9_78x5d"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button_send" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "generate image"
+script = ExtResource("1_2s0x4")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="CanvasLayer/VBoxContainer/HBoxContainer/Button_send"]
+use_threads = true
+
+[node name="Button_abort" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "abort generation"
+script = ExtResource("3_q2cre")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="CanvasLayer/VBoxContainer/HBoxContainer/Button_abort"]
+
+[node name="HSplitContainer" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect_sdimage" type="TextureRect" parent="CanvasLayer/VBoxContainer/HSplitContainer"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_f0nae")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect_sdimageProgress" type="TextureRect" parent="CanvasLayer/VBoxContainer/HSplitContainer"]
+custom_minimum_size = Vector2(12, 12)
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_f0nae")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HBoxContainer_save" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button_saveimage" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer_save"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Save Image"
+script = ExtResource("4_a1653")
+
+[node name="Button_savedata" type="Button" parent="CanvasLayer/VBoxContainer/HBoxContainer_save"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = "Save Data"
+script = ExtResource("5_2fwni")
+
+[node name="LineEdit_status" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer_save"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 20.0
+theme_override_colors/font_color = Color(0.207843, 0.45098, 0, 1)
+theme_override_font_sizes/font_size = 12
+placeholder_text = "status"
+script = ExtResource("5_irsap")
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+value = 100.0
+
+[node name="TextEdit_prompt" type="TextEdit" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "The cutest puppy face,aww,cute,adorable,funny,cutest,friendly"
+placeholder_text = "prompt"
+deselect_on_focus_loss_enabled = false
+wrap_mode = 1
+caret_blink = true
+
+[node name="TextEdit_prompt_negative" type="TextEdit" parent="CanvasLayer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+text = "cats,turtles,goats,big dogs"
+placeholder_text = "negative prompt"
+deselect_on_focus_loss_enabled = false
+wrap_mode = 1
+caret_blink = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label_cfg" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "CFG:"
+
+[node name="LineEdit_cfg" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "7.0"
+placeholder_text = "CFG"
+caret_blink = true
+
+[node name="Label_w" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "W:"
+
+[node name="LineEdit_w" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "512"
+caret_blink = true
+
+[node name="Label_h" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "H:"
+
+[node name="LineEdit_h" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "512"
+caret_blink = true
+
+[node name="Label_steps" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "STEPS:"
+
+[node name="LineEdit_steps" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "20"
+caret_blink = true
+
+[node name="Label_seed" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "SEED:"
+
+[node name="LineEdit_seed" type="LineEdit" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "-1"
+caret_blink = true
+
+[node name="Label_face" type="Label" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "FACE FIX:"
+
+[node name="CheckBox_face" type="CheckBox" parent="CanvasLayer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Window_ERROR_noserver" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 0.985541)
+color = Color(0, 0, 0, 0.682353)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/Window_ERROR_noserver"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -220.0
+offset_bottom = 220.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1, 1.00644)
+theme_override_colors/default_color = Color(0, 0.470588, 1, 1)
+theme_override_colors/font_selected_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 40
+text = "Unable to access your local Stable Diffusion API server. Start your api server before using this program.  WebP image format not supported.
+
+(Automatic1111 users start your webui with --api) parameter.
+
+This could also just be a temporary lapse. Just wait it out if the server is busy."
+fit_content = true
+
+[node name="Node_pulse" type="Node" parent="."]
+script = ExtResource("3_jrtii")
+
+[node name="Timer" type="Timer" parent="Node_pulse"]
+wait_time = 3.0
+autostart = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Node_pulse"]
+
+[node name="Node_pulse_config" type="Node" parent="."]
+script = ExtResource("6_gxo1d")
+
+[node name="Timer" type="Timer" parent="Node_pulse_config"]
+wait_time = 25.4
+autostart = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Node_pulse_config"]
+
+[node name="Node_pulse_models" type="Node" parent="."]
+script = ExtResource("7_i5ldt")
+
+[node name="Timer" type="Timer" parent="Node_pulse_models"]
+wait_time = 25.4
+autostart = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="Node_pulse_models"]
+
+[node name="FileDialog_save" type="FileDialog" parent="."]
+title = "Save Generated Image"
+initial_position = 1
+size = Vector2i(700, 600)
+ok_button_text = "Save Image"
+access = 2
+root_subfolder = "./temp"
+script = ExtResource("9_78x5d")
+
+[connection signal="button_up" from="CanvasLayer/VBoxContainer/HBoxContainer/Button_send" to="CanvasLayer/VBoxContainer/HBoxContainer/Button_send" method="_on_button_up"]
+[connection signal="button_up" from="CanvasLayer/VBoxContainer/HBoxContainer/Button_abort" to="CanvasLayer/VBoxContainer/HBoxContainer/Button_abort" method="_on_button_up"]
+[connection signal="button_up" from="CanvasLayer/VBoxContainer/HBoxContainer_save/Button_saveimage" to="CanvasLayer/VBoxContainer/HBoxContainer_save/Button_saveimage" method="_on_button_up"]
+[connection signal="button_up" from="CanvasLayer/VBoxContainer/HBoxContainer_save/Button_savedata" to="CanvasLayer/VBoxContainer/HBoxContainer_save/Button_savedata" method="_on_button_up"]
+[connection signal="ready" from="Node_pulse" to="Node_pulse" method="_on_ready"]
+[connection signal="timeout" from="Node_pulse/Timer" to="Node_pulse" method="_on_timer_timeout"]
+[connection signal="ready" from="Node_pulse_config" to="Node_pulse_config" method="_on_ready"]
+[connection signal="timeout" from="Node_pulse_config/Timer" to="Node_pulse_config" method="_on_timer_timeout"]
+[connection signal="ready" from="Node_pulse_models" to="Node_pulse_models" method="_on_ready"]
+[connection signal="timeout" from="Node_pulse_models/Timer" to="Node_pulse_models" method="_on_timer_timeout"]
+[connection signal="file_selected" from="FileDialog_save" to="FileDialog_save" method="_on_file_selected"]

@@ -2,6 +2,8 @@
 
 Godot StableDiffusion Local API Client is a Godot 4+ example for utilizing a backend API, such as Automatic1111, to generate StableDiffusion AI images using Godot. Settings configured in the web interface seamlessly transfer to the Godot client.
 
+![Chat Application Screenshot](./screenshot.png)
+
 ## Overview
 
 This project serves as a demonstration of integrating StableDiffusion AI image generation into Godot game engine projects. It allows developers to leverage the power of AI-generated imagery within their Godot applications, enhancing visual experiences and enabling dynamic content creation.
